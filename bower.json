@@ -1,0 +1,29 @@
+{
+  "name": "typescript-angularjs-requirejs",
+  "version": "1.0.0",
+  "authors": [
+    "Cyril Schumacher"
+  ],
+  "moduleType": [
+    "amd",
+    "es6"
+  ],
+  "keywords": [
+    "typescript",
+    "angularjs",
+    "requirejs"
+  ],
+  "license": "MIT",
+  "homepage": "http://www.cyrilschumacher.fr/",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs": "~2.1.15"
+  }
+}
