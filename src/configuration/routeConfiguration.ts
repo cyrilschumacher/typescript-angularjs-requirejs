@@ -32,27 +32,6 @@ class RouteConfiguration {
     'use strict';
 
     /**
-     * @summary Controller path.
-     * @private
-     * @type {string}
-     */
-    private static _controllerPath: string = 'scripts/controller/';
-
-    /**
-     * @summary Stylesheet path.
-     * @private
-     * @type {string}
-     */
-    private static _stylesheetPath = 'css/';
-
-    /**
-     * @summary View path.
-     * @private
-     * @type {string}
-     */
-    private static _viewPath: string = 'view/';
-
-    /**
      * @summary Dependencies injection.
      * @public
      * @type {Array<string>}
@@ -73,16 +52,16 @@ class RouteConfiguration {
     /**
      * Adds route.
      * @private
-     * @param   {string} viewName               View name.
-     * @param   {string} stylesheetName         Stylesheet name. Optional.
-     * @param   {string} controllerName         Controller name. Optional.
-     * @return  {IRoute}                        A route definition.
+     * @param   {string}            viewName               View name.
+     * @param   {string}            controllerName         Controller name. Optional.
+     * @param   {string|string[]}   stylesheetName         Stylesheet name. Optional.
+     * @return  {IRoute}            A route definition.
      */
-    private _addRoute = (viewName: string, stylesheetName?: string, controllerName?: string): ng.route.IRoute => {
+     private _addRoute = (viewName: string, controllerName?: string, stylesheetName?: string|Array<string>): ng.route.IRoute => {
         controllerName = controllerName ? controllerName : viewName;
         stylesheetName = stylesheetName ? stylesheetName : viewName;
         
-        var cssFile: string                     = this.appConfig.route.cssPath.concat(stylesheetName, '.css');
+        var cssFile: string                     = this._getCSSFiles(stylesheetName);
         var controllerNameWithPrefix: string    = controllerName.concat('Controller');
         var templateFile: string                = this.appConfig.route.viewPath.concat(viewName, '.html');
         var controllerFile: string              = this.appConfig.route.controllerPath.concat(controllerNameWithPrefix, '.js');
@@ -94,6 +73,36 @@ class RouteConfiguration {
             templateUrl:    templateFile
         };
     }
+     
+    /**
+     * @summary Format CSS file.
+     * @param {string} stylesheetName Stylesheet name.
+     */
+    private _formatCssPath = (stylesheetName: string) => {
+        return this.appConfig.route.cssPath.concat(stylesheetName, '.css');
+    } 
+     
+    /**
+     * @summary Gets the CSS files.
+     * @param   {string|string[]} stylesheetName Stylesheet name.
+     * @return  {string[]}        CSS files.
+     */
+    private _getCSSFiles = (stylesheetName: string|Array<string>): Array<string> => {
+        var cssFiles: Array<string> = new Array<string>();
+        var cssPath: string = null;
+ 
+        if (typeof stylesheetName === 'string') {
+            cssPath = this._formatCssPath(stylesheetName);
+            cssFiles.push(cssPath);
+        } else {
+            for (var index in stylesheetName) {
+                cssPath = this._formatCssPath(stylesheetName[index]);
+                cssFiles.push(cssPath);
+            }
+        }
+ 
+        return cssFiles;
+    } 
     
     /**
      * @summary Resolve route.

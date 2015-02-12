@@ -107,6 +107,8 @@ class Application {
     private _initConstants = (): void => {
         // Creates an application configuration.
         var appConfig: any = {
+            'appName': 'My application',
+            'appVersion': 1.0,
             'route': {
                 'controllerPath': 'scripts/controller/',
                 'cssPath': 'css/',
