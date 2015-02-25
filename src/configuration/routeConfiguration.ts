@@ -61,7 +61,7 @@ class RouteConfiguration {
         controllerName = controllerName ? controllerName : viewName;
         stylesheetName = stylesheetName ? stylesheetName : viewName;
         
-        var cssFile: string                     = this._getCSSFiles(stylesheetName);
+        var cssFile: Array<string>              = this._getCSSFiles(stylesheetName);
         var controllerNameWithPrefix: string    = controllerName.concat('Controller');
         var templateFile: string                = this.appConfig.route.viewPath.concat(viewName, '.html');
         var controllerFile: string              = this.appConfig.route.controllerPath.concat(controllerNameWithPrefix, '.js');

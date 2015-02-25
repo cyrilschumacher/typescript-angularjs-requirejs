@@ -41,20 +41,27 @@ class CustomDirective implements ng.IDirective {
     public static $inject: Array<String> = [];
 
     /**
-     * @summary Restrict option.
+     * @summary Restrict.
      * @public
      * @type {string}
      */
-    public static restrict: string = 'A';
+    public restrict: string = 'A';
+
+    /**
+     * @summary Scope.
+     * @public
+     * @type {string}
+     */
+    public scope: Object = {};
     
     /**
      * @summary Manipulates the DOM of the current page.
      * @public
-     * @param {IScope}      scope   Angular scope object.
-     * @param {JQuery}      element jqLite-wrapped element that this directive matches.
-     * @param {IAttributes} attrs   hash object with key-value pairs of normalized attribute names and their corresponding attribute values.
+     * @param {IScope}      $scope   Angular scope object.
+     * @param {JQuery}      $element jqLite-wrapped element that this directive matches.
+     * @param {IAttributes} $attrs   hash object with key-value pairs of normalized attribute names and their corresponding attribute values.
      */
-    public link = (scope: ng.IScope, element: JQuery, attrs: ng.IAttributes): ng.IDirectiveLinkFn => {
+    public link = ($scope: ng.IScope, $element: JQuery, $attrs: ng.IAttributes): ng.IDirectiveLinkFn => {
         console.log('CustomDirective#link');
         return;
     }

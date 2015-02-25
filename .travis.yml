@@ -1,5 +1,8 @@
 language: node_js
 node_js:
   - "0.11"
-install:
-  - "npm install -g typescript"
+before_install:
+  - "npm install"
+  - "bower install"
+script:
+    - "grunt"

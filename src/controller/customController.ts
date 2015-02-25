@@ -26,6 +26,7 @@
 /// <amd-dependency path="service/customService"/>
 
 import app = require('app');
+import CustomService = require('service/customService');
 
 /**
  * @summary Custom controller.
@@ -49,7 +50,7 @@ class CustomController {
      * @param $scope            {IScope}    Scope.
      * @param $customService    {any}       Custom service.
      */
-    public constructor(private $scope: ng.IScope, private customService: any) {
+    public constructor(private $scope: ng.IScope, private customService: CustomService) {
         console.log('CustomController#constructor');
     }
 }
