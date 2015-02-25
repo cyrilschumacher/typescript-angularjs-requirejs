@@ -29,8 +29,6 @@ import app = require('app');
  * @class
  */
 class CustomService {
-    'use strict';
-
     /**
      * @summary Dependencies injection.
      * @public

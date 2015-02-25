@@ -31,8 +31,6 @@ import app = require('app');
  * @class
  */
 class CustomDirective implements ng.IDirective {
-    'use strict';
-
     /**
      * @summary Dependencies injection.
      * @public

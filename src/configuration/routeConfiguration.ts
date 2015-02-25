@@ -21,6 +21,7 @@
  * SOFTWARE.
  */
 
+/// <reference path="../../bower_components/DefinitelyTyped/angularjs/angular.d.ts" />
 /// <reference path="../../bower_components/DefinitelyTyped/angularjs/angular-route.d.ts" />
 
 /**
@@ -29,8 +30,6 @@
  * @class
  */
 class RouteConfiguration {
-    'use strict';
-
     /**
      * @summary Dependencies injection.
      * @public
@@ -108,13 +107,13 @@ class RouteConfiguration {
      * @summary Resolve route.
      * @private
      * @param   {string|Array<string>} viewName View name.
-     * @return  {any}                           Resolve object.
+     * @return  {Object}               Resolve object.
      */
     private _resolve = (controllerFile: string|Array<string>): any => {
         var dependencies: Array<string> = (typeof controllerFile === 'string') ? [controllerFile] : controllerFile;
         
         return {
-            load: ['$q', '$rootScope', ($q, $rootScope) => {
+            load: ['$q', '$rootScope', ($q: ng.IQService, $rootScope: ng.IRootScopeService) => {
                 return this._resolveDependencies($q, $rootScope, dependencies);
             }]
         };

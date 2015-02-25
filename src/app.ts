@@ -32,8 +32,6 @@ import routeConfiguration = require('configuration/routeConfiguration');
  * @class
  */
 class Application {
-    'use strict';
-
     /**
      * @summary Instance.
      * @private
@@ -106,7 +104,7 @@ class Application {
      */
     private _initConstants = (): void => {
         // Creates an application configuration.
-        var appConfig: any = {
+        var appConfig: Object = {
             'appName': 'My application',
             'appVersion': 1.0,
             'route': {
@@ -138,11 +136,11 @@ class Application {
      */
     private _register = ($routeProvider: ng.route.IRouteProvider, $controllerProvider: ng.IControllerProvider, $compileProvider: ng.ICompileProvider, $filterProvider: ng.IFilterProvider, $provide: any) => {
         this._module['register'] = { 
-            controller: $controllerProvider.register, 
-            directive: $compileProvider.directive, 
-            filter: $filterProvider.register, 
-            factory: $provide.factory, 
-            service: $provide.service
+            controller: $controllerProvider.register,
+            directive:  $compileProvider.directive,
+            factory:    $provide.factory,
+            filter:     $filterProvider.register,
+            service:    $provide.service
         };
     }
 }

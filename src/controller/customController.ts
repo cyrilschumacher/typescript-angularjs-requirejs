@@ -34,8 +34,6 @@ import CustomService = require('service/customService');
  * @class
  */
 class CustomController {
-    'use strict';
-
     /**
      * @summary Dependencies injection.
      * @public
@@ -47,8 +45,8 @@ class CustomController {
      * @summary Constructor.
      * @constructs
      * @public
-     * @param $scope            {IScope}    Scope.
-     * @param $customService    {any}       Custom service.
+     * @param $scope            {IScope}        Scope.
+     * @param $customService    {CustomService} Custom service.
      */
     public constructor(private $scope: ng.IScope, private customService: CustomService) {
         console.log('CustomController#constructor');
