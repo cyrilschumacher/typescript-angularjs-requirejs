@@ -1,8 +1,12 @@
 language: node_js
-node_js:
-  - "0.11"
+node_js: "4.1"
 before_install:
-  - "npm install"
-  - "bower install"
-script:
-    - "grunt"
+  - npm install -g bower
+  - npm install -g grunt-cli
+  - npm install -g karma-cli
+install:
+  - npm install
+  - bower install
+  - grunt
+before_script: grunt
+script: karma start karma.config.js --single-run

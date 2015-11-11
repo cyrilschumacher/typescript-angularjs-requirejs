@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  *
- * Copyright (c) 2015 Cyril Schumacher.fr
+ * Copyright (c) 2015 Cyril Schumacher
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,30 +20,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+'use strict';
 
-import Application = require("app");
+define(['app'],
+    function(app) {
+        describe('Application', function() {
+            it('checks the module is defined and not null', function() {
+                expect(app.module).toBeDefined();
+                expect(app.module).not.toBeNull();
+            });
 
-/**
- * @summary Custom service.
- * @author  Cyril Schumacher
- * @class
- */
-class CustomService {
-    /**
-     * @summary Dependencies injection.
-     * @type {Array<string>}
-     */
-    public static $inject: Array<String> = [];
+            it('checks the initialize method is defined and should be call', function() {
+                expect(app.initialize).toBeDefined();
+                expect(app.initialize).not.toBeNull();
 
-    /**
-     * @summary Constructor.
-     * @constructs
-     * @param $scope {IScope} Scope.
-     */
-    public constructor() {
-        console.log("CustomService#constructor");
+                app.initialize();
+            });
+        });
     }
-}
-
-export = CustomService;
-Application.module["register"].service("customService", CustomService);
+);

@@ -1,17 +1,17 @@
 /* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2015 Cyril Schumacher.fr
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,10 +21,10 @@
  * SOFTWARE.
  */
 
-/// <reference path="../bower_components/DefinitelyTyped/angularjs/angular.d.ts" />
-/// <reference path="../bower_components/DefinitelyTyped/angularjs/angular-route.d.ts" />
+/// <reference path="typing/angularjs/angular.d.ts" />
+/// <reference path="typing/angularjs/angular-route.d.ts" />
 
-import routeConfiguration = require('configuration/routeConfiguration');
+import routeConfiguration = require("configuration/routeConfiguration");
 
 /**
  * @summary Application.
@@ -38,14 +38,14 @@ class Application {
      * @type {Application}
      */
     private static _instance: Application;
-    
+
     /**
      * @summary Angular module.
      * @private
      * @type {IModule}
      */
     private _module: ng.IModule;
-    
+
     /**
      * @summary Gets the angular module.
      * @public
@@ -60,12 +60,11 @@ class Application {
      * @public
      * @returns {Application} Instance of class.
      */
-    public static get instance(): Application
-    {
-        if(!Application._instance) {
+    public static get instance(): Application {
+        if (!Application._instance) {
             Application._instance = new Application();
         }
-        
+
         return Application._instance;
     }
 
@@ -87,17 +86,17 @@ class Application {
         // Initialize constants and configurations.
         this._initConstants();
         this._initConfigurations();
-    }
-        
+    };
+
     /**
      * @summary Initialize configuration.
      * @private
      */
     private _initConfigurations = (): void => {
         this._module.config(routeConfiguration)
-                    .config(['$routeProvider', '$controllerProvider', '$compileProvider', '$filterProvider', '$provide', this._register]);
-    }
-        
+            .config(["$routeProvider", "$controllerProvider", "$compileProvider", "$filterProvider", "$provide", this._register]);
+    };
+
     /**
      * @summary Initialize constants.
      * @private
@@ -105,25 +104,25 @@ class Application {
     private _initConstants = (): void => {
         // Creates an application configuration.
         var appConfig: Object = {
-            'appName': 'My application',
-            'appVersion': 1.0,
-            'route': {
-                'controllerPath': 'scripts/controller/',
-                'cssPath': 'css/',
-                'viewPath': 'view/'
+            "appName": "My application",
+            "appVersion": 1.0,
+            "route": {
+                "controllerPath": "javascript/controller/",
+                "cssPath": "css/",
+                "viewPath": "view/"
             }
         };
-        
-        this._module.constant('appConfig', appConfig)
-    }
+
+        this._module.constant("appConfig", appConfig);
+    };
 
     /**
      * @summary Initialize module.
      * @private
      */
     private _initModule = (): void => {
-        this._module = angular.module('app', ['routeStyles']);
-    }
+        this._module = angular.module("app", ["routeStyles"]);
+    };
 
     /**
      * @summary Register providers.
@@ -135,14 +134,14 @@ class Application {
      * @param {any}                 $provide            Provide.
      */
     private _register = ($routeProvider: ng.route.IRouteProvider, $controllerProvider: ng.IControllerProvider, $compileProvider: ng.ICompileProvider, $filterProvider: ng.IFilterProvider, $provide: any) => {
-        this._module['register'] = { 
+        this._module["register"] = {
             controller: $controllerProvider.register,
-            directive:  $compileProvider.directive,
-            factory:    $provide.factory,
-            filter:     $filterProvider.register,
-            service:    $provide.service
+            directive: $compileProvider.directive,
+            factory: $provide.factory,
+            filter: $filterProvider.register,
+            service: $provide.service
         };
-    }
+    };
 }
 
-export = Application;
+export = Application.instance;

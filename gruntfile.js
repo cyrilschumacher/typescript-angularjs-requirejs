@@ -12,15 +12,15 @@ module.exports = function (grunt) {
                             'angular-route-styles/*.js',
                             'requirejs/*.js'
                         ],
-                        dest: 'dist/scripts/vendors/'
+                        dest: 'dist/javascript/vendor/'
                     }
                 ]
             }
         },
         ts: {
             default: {
-                src: ['src/**/*.ts'],
-                outDir: 'dist/scripts/',
+                src: ['src/**/*.ts', '!src/typing/**/*.ts'],
+                outDir: 'dist/javascript/',
                 options: {
                     target: 'es5'
                 }

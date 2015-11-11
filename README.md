@@ -1,22 +1,37 @@
 # typescript-angularjs-requirejs
+[![Build Status](https://travis-ci.org/cyrilschumacher/typescript-angularjs-requirejs.svg?branch=master)](https://travis-ci.org/cyrilschumacher/typescript-angularjs-requirejs)
+
 Basic Typescript project using the AngularJS and Requirejs frameworks.
+
+## Getting Started
+### How to initialize?
+The first step is to initialize the project by running the following two commands:
+
+> npm install && bower install
+
+### How to get JavaScript source code?
+To get the JavaScript source code, run the command above:
+
+> grunt
+
+ This command will generate you a directory that contains the sources.
 
 ## Copyright and license
 
 > The MIT License (MIT)
-> 
+>
 > Copyright (c) 2015 Cyril Schumacher.fr
-> 
+>
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 > of this software and associated documentation files (the "Software"), to deal
 > in the Software without restriction, including without limitation the rights
 > to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 > copies of the Software, and to permit persons to whom the Software is
 > furnished to do so, subject to the following conditions:
-> 
+>
 > The above copyright notice and this permission notice shall be included in all
 > copies or substantial portions of the Software.
-> 
+>
 > THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 > IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 > FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE

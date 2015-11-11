@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  *
- * Copyright (c) 2015 Cyril Schumacher.fr
+ * Copyright (c) 2015 Cyril Schumacher
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,29 +21,38 @@
  * SOFTWARE.
  */
 
-import Application = require("app");
+'use strict';
 
-/**
- * @summary Custom service.
- * @author  Cyril Schumacher
- * @class
- */
-class CustomService {
-    /**
-     * @summary Dependencies injection.
-     * @type {Array<string>}
-     */
-    public static $inject: Array<String> = [];
-
-    /**
-     * @summary Constructor.
-     * @constructs
-     * @param $scope {IScope} Scope.
-     */
-    public constructor() {
-        console.log("CustomService#constructor");
+var allTestFiles = [];
+for (var file in window.__karma__.files) {
+  if (window.__karma__.files.hasOwnProperty(file)) {
+    if (/Spec\.js$/.test(file)) {
+       allTestFiles.push(file);
     }
+  }
 }
 
-export = CustomService;
-Application.module["register"].service("customService", CustomService);
+require.config({
+  // Karma serves files under /base, which is the basePath from your config file
+  baseUrl: '/base/dist/javascript',
+
+  // dynamically load all test files
+  deps: allTestFiles,
+
+  // we have to kickoff jasmine, as it is asynchronous
+  callback: window.__karma__.start,
+
+  paths: {
+      'angular':              'vendor/angular/angular',
+      'angular-route':        'vendor/angular-route/angular-route',
+      'angular-route-styles': 'vendor/angular-route-styles/route-styles',
+      'jquery':               'vendor/jquery/jquery',
+  },
+  shim: {
+      'angular': {
+          exports: 'angular'
+      },
+      'angular-route':      ['angular'],
+      'app':                ['angular-route']
+  }
+});
