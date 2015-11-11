@@ -63,7 +63,7 @@ class RouteConfiguration {
         var cssFile: Array<string> = this._getCSSFiles(stylesheetName);
         var controllerNameWithPrefix: string = controllerName.concat("Controller");
         var templateFile: string = this.appConfig.route.viewPath.concat(viewName, ".html");
-        var controllerFile: string = this.appConfig.route.controllerPath.concat(controllerNameWithPrefix, ".js");
+        var controllerFile: string = this.appConfig.route.controllerPath.concat(controllerNameWithPrefix);
 
         var route = {
             controller: controllerNameWithPrefix,
@@ -72,7 +72,7 @@ class RouteConfiguration {
             templateUrl: templateFile
         };
         return route;
-    }
+    };
 
     /**
      * @summary Format CSS file.
@@ -80,7 +80,7 @@ class RouteConfiguration {
      */
     private _formatCssPath = (stylesheetName: string) => {
         return this.appConfig.route.cssPath.concat(stylesheetName, ".css");
-    }
+    };
 
     /**
      * @summary Gets the CSS files.
@@ -102,7 +102,7 @@ class RouteConfiguration {
         }
 
         return cssFiles;
-    }
+    };
 
     /**
      * @summary Resolve route.
@@ -111,14 +111,14 @@ class RouteConfiguration {
      * @return  {Object}               Resolve object.
      */
     private _resolve = (controllerFile: string|Array<string>): any => {
-        var dependencies: Array<string> = (typeof controllerFile === 'string') ? [controllerFile] : controllerFile;
+        var dependencies: Array<string> = (typeof controllerFile === "string") ? [controllerFile] : controllerFile;
 
         return {
             load: ["$q", "$rootScope", ($q: ng.IQService, $rootScope: ng.IRootScopeService) => {
                 return this._resolveDependencies($q, $rootScope, dependencies);
             }]
         };
-    }
+    };
 
     /**
      * @summary Resolve dependencies.
@@ -137,7 +137,7 @@ class RouteConfiguration {
         });
 
         return defer.promise;
-    }
+    };
 }
 
 export = RouteConfiguration;

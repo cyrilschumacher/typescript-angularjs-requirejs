@@ -62,4 +62,4 @@ class CustomDirective implements ng.IDirective {
 }
 
 export = CustomDirective;
-Application.module["register"].directive("ngCustom", () => new CustomDirective());
+Application.module.directive("ngCustom", () => new CustomDirective());

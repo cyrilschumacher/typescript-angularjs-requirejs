@@ -21,29 +21,51 @@
  * SOFTWARE.
  */
 
+/// <reference path="../typing/angularjs/angular.d.ts" />
+/// <amd-dependency path="directive/custom"/>
+/// <amd-dependency path="service/custom"/>
+
 import Application = require("app");
+import CustomService = require("service/custom");
 
 /**
- * @summary Custom service.
+ * @summary Custom controller.
  * @author  Cyril Schumacher
  * @class
  */
-class CustomService {
+class CustomController {
     /**
      * @summary Dependencies injection.
      * @type {Array<string>}
      */
-    public static $inject: Array<String> = [];
+    public static $inject: Array<String> = ["$scope", "customService"];
 
     /**
      * @summary Constructor.
      * @constructs
-     * @param $scope {IScope} Scope.
+     * @param $scope            {IScope}        Scope.
+     * @param $customService    {CustomService} Custom service.
      */
-    public constructor() {
-        console.log("CustomService#constructor");
+    public constructor(private $scope: ng.IScope, private customService: CustomService) {
+        /* Functions. */
+        this.$scope["double"] = this._double;
+
+        /* Variables. */
+        this.$scope["spices"] = [{ "name": "pasilla", "spiciness": "mild" },
+            { "name": "jalapeno", "spiciness": "hot hot hot!" },
+            { "name": "habanero", "spiciness": "LAVA HOT!!" }];
+        this.$scope["spice"] = "habanero";
     }
+
+    /**
+     * @summary Twice a number.
+     * @param {number} value The number.
+     * @return {number} The result.
+     */
+    private _double = (value: number): number => {
+        return value * 2;
+    };
 }
 
-export = CustomService;
-Application.module["register"].service("customService", CustomService);
+export = CustomController;
+Application.module.controller("customController", CustomController);

@@ -24,7 +24,8 @@
 /// <reference path="typing/angularjs/angular.d.ts" />
 /// <reference path="typing/angularjs/angular-route.d.ts" />
 
-import routeConfiguration = require("configuration/routeConfiguration");
+import RegisterConfiguration = require("configuration/register");
+import RouteConfiguration = require("configuration/route");
 
 /**
  * @summary Application.
@@ -93,8 +94,8 @@ class Application {
      * @private
      */
     private _initConfigurations = (): void => {
-        this._module.config(routeConfiguration)
-            .config(["$routeProvider", "$controllerProvider", "$compileProvider", "$filterProvider", "$provide", this._register]);
+        this._module.config(RegisterConfiguration)
+                    .config(RouteConfiguration);
     };
 
     /**
@@ -104,7 +105,7 @@ class Application {
     private _initConstants = (): void => {
         // Creates an application configuration.
         var appConfig: Object = {
-            "appName": "My application",
+            "appName": "app",
             "appVersion": 1.0,
             "route": {
                 "controllerPath": "javascript/controller/",
@@ -122,25 +123,6 @@ class Application {
      */
     private _initModule = (): void => {
         this._module = angular.module("app", ["routeStyles"]);
-    };
-
-    /**
-     * @summary Register providers.
-     * @private
-     * @param {IRouteProvider}      $routeProvider      Route provider.
-     * @param {IControllerProvider} $controllerProvider Controller provider.
-     * @param {ICompileProvider}    $compileProvider    Compile provider.
-     * @param {IFilterProvider}     $filterProvider     Filter provider.
-     * @param {any}                 $provide            Provide.
-     */
-    private _register = ($routeProvider: ng.route.IRouteProvider, $controllerProvider: ng.IControllerProvider, $compileProvider: ng.ICompileProvider, $filterProvider: ng.IFilterProvider, $provide: any) => {
-        this._module["register"] = {
-            controller: $controllerProvider.register,
-            directive: $compileProvider.directive,
-            factory: $provide.factory,
-            filter: $filterProvider.register,
-            service: $provide.service
-        };
     };
 }
 

@@ -21,35 +21,29 @@
  * SOFTWARE.
  */
 
-/// <reference path="../typing/angularjs/angular.d.ts" />
-/// <amd-dependency path="directive/customDirective"/>
-/// <amd-dependency path="service/customService"/>
-
 import Application = require("app");
-import CustomService = require("service/customService");
 
 /**
- * @summary Custom controller.
+ * @summary Custom service.
  * @author  Cyril Schumacher
  * @class
  */
-class CustomController {
+class CustomService {
     /**
      * @summary Dependencies injection.
      * @type {Array<string>}
      */
-    public static $inject: Array<String> = ["$scope", "customService"];
+    public static $inject: Array<String> = [];
 
     /**
      * @summary Constructor.
      * @constructs
-     * @param $scope            {IScope}        Scope.
-     * @param $customService    {CustomService} Custom service.
+     * @param $scope {IScope} Scope.
      */
-    public constructor(private $scope: ng.IScope, private customService: CustomService) {
-        console.log("CustomController#constructor");
+    public constructor() {
+        console.log("CustomService#constructor");
     }
 }
 
-export = CustomController;
-Application.module["register"].controller("customController", CustomController);
+export = CustomService;
+Application.module.service("customService", CustomService);
