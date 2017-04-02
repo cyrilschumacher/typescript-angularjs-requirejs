@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  *
- * Copyright (c) 2015 Cyril Schumacher.fr
+ * Copyright (c) 2017 Cyril Schumacher.fr
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,20 +21,21 @@
  * SOFTWARE.
  */
 
-/// <reference path="typing/requirejs/require.d.ts" />
+/// <reference types="requirejs"/>
 
 require.config({
     paths: {
         "angular":              "vendor/angular/angular",
         "angular-route":        "vendor/angular-route/angular-route",
         "angular-route-styles": "vendor/angular-route-styles/route-styles",
+        "jquery":               "vendor/jquery/dist/jquery",
         "loader":               "loader"
     },
 
     shim: {
         "angular-route":        ["angular"],
         "angular-route-styles": ["angular"],
-        "loader":               ["angular-route", "angular-route-styles"]
+        "loader":               ["angular-route", "angular-route-styles", "jquery"]
     }
 });
 

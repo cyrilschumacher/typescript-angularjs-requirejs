@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  *
- * Copyright (c) 2015 Cyril Schumacher
+ * Copyright (c) 2017 Cyril Schumacher
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,9 @@
  * SOFTWARE.
  */
 
-import Application = require("app");
+import * as angular from "angular";
+
+import Application = require("../app");
 
 /**
  * @summary Configuration for register.
@@ -30,37 +32,30 @@ import Application = require("app");
  */
 class RegisterConfiguration {
     /**
-     * @summary Dependencies injection.
-     * @type {Array<string>}
-     */
-    public static $inject: Array<string> = ["appConfig", "$controllerProvider", "$compileProvider", "$filterProvider", "$provide"];
-
-    /**
      * @summary Constructor.
      * @constructor
-     * @param {Object}              appConfig           The application configuration.
-     * @param {ng.IServiceProvider} $controllerProvider The controller provider.
-     * @param {ng.IServiceProvider} $compileProvider    The compile provider.
-     * @param {ng.IServiceProvider} $filterProvider     The filter provider.
-     * @param {ng.IServiceProvider} $provide            The provide.
+     * @param {Object}           appConfig           The application configuration.
+     * @param {IServiceProvider} $controllerProvider The controller provider.
+     * @param {IServiceProvider} $compileProvider    The compile provider.
+     * @param {IServiceProvider} $filterProvider     The filter provider.
+     * @param {IServiceProvider} $provide            The provide.
      */
-    public constructor(private appConfig: Object, private $controllerProvider: ng.IServiceProvider, private $compileProvider: ng.IServiceProvider, private $filterProvider: ng.IServiceProvider, private $provide: ng.IServiceProvider) {
+    public constructor(private $controllerProvider: angular.IServiceProvider, private $compileProvider: angular.IServiceProvider, private $filterProvider: angular.IServiceProvider, private $provide: angular.IServiceProvider) {
         this._initializeRegister();
     }
 
-    /**
-     * @summary Initializes register.
-     * @private
-     */
-    private _initializeRegister = (): void => {
-        const moduleName: string = this.appConfig["appName"];
-        const module = angular.module(moduleName);
+    public static create = ($controllerProvider: angular.IServiceProvider, $compileProvider: angular.IServiceProvider, $filterProvider: angular.IServiceProvider, $provide: angular.IServiceProvider) => {
+        return new RegisterConfiguration($controllerProvider, $compileProvider, $filterProvider, $provide);
+    }
 
-        module.controller = this.$controllerProvider["register"];
-        module.directive = this.$compileProvider["directive"];
-        module.filter = this.$filterProvider["register"];
-        module.factory = this.$provide["factory"];
-        module.service = this.$provide["service"];
+    private _initializeRegister = () => {
+        const app = angular.module("app");
+
+        app.controller = this.$controllerProvider["register"];
+        app.directive = this.$compileProvider["directive"];
+        app.filter = this.$filterProvider["register"];
+        app.factory = this.$provide["factory"];
+        app.service = this.$provide["service"];
     };
 }
 

@@ -23,43 +23,42 @@
 
 import * as angular from "angular";
 
-import Application = require("../app");
-
 /**
- * @summary Custom directive.
+ * @summary Persona external configuration block.
  * @author  Cyril Schumacher
  * @class
  */
-class CustomDirective implements angular.IDirective {
-    /**
-     * @summary Dependencies injection.
-     * @type {Array<string>}
-     */
-    public static $inject = [];
+class ConfigurationProvider {
+    private _configuration: {};
 
     /**
-     * @summary Restrict.
-     * @type {string}
+     * @summary Constructor.
+     * @constructor
      */
-    public restrict = "A";
+    public constructor() {
+        this._configuration = {};
+    }
 
     /**
-     * @summary Scope.
-     * @type {string}
+     * @summary Reads the content of the HTTP response.
+     * @param configuration   {Object} The configuration.
      */
-    public scope = {};
+    public set = (configuration: {}) => {
+        angular.extend(this._configuration, configuration);
+    };
 
     /**
-     * @summary Manipulates the DOM of the current page.
-     * @param {IScope}              $scope   Angular scope object.
-     * @param {IAugmentedJQuery}    $element jqLite-wrapped element that this directive matches.
-     * @param {IAttributes}         $attrs   hash object with key-value pairs of normalized attribute names and their corresponding attribute values.
+     * @summary Shortcut method to perform GET request.
+     * @public
+     * @return {ng.IModule} Module.
      */
-    public link = ($scope: angular.IScope, $element: angular.IAugmentedJQuery, $attrs: angular.IAttributes): angular.IDirectiveLinkFn => {
-        console.log("CustomDirective#link");
-        return;
+    public $get = () => {
+        if (!this._configuration) {
+            throw new Error("No configuration defined.");
+        }
+
+        return this._configuration;
     };
 }
 
-export = CustomDirective;
-Application.module.directive("ngCustom", () => new CustomDirective());
+export = ConfigurationProvider;

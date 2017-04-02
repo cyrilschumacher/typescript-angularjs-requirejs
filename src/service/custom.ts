@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  *
- * Copyright (c) 2015 Cyril Schumacher.fr
+ * Copyright (c) 2017 Cyril Schumacher.fr
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
  * SOFTWARE.
  */
 
-import Application = require("app");
+import Application = require("../app");
 
 /**
  * @summary Custom service.
@@ -33,7 +33,7 @@ class CustomService {
      * @summary Dependencies injection.
      * @type {Array<string>}
      */
-    public static $inject: Array<String> = [];
+    public static $inject = [];
 
     /**
      * @summary Constructor.

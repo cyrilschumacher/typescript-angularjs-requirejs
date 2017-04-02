@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  *
- * Copyright (c) 2015 Cyril Schumacher.fr
+ * Copyright (c) 2017 Cyril Schumacher.fr
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,11 +21,11 @@
  * SOFTWARE.
  */
 
-/// <reference path="typing/angularjs/angular.d.ts" />
-/// <reference path="typing/angularjs/angular-route.d.ts" />
+import * as angular from 'angular';
 
-import RegisterConfiguration = require("configuration/register");
-import RouteConfiguration = require("configuration/route");
+import RegisterConfiguration = require("./configuration/register");
+import RouteConfiguration = require("./configuration/route");
+import ConfigurationProvider = require("./provider/configuration");
 
 /**
  * @summary Application.
@@ -33,40 +33,15 @@ import RouteConfiguration = require("configuration/route");
  * @class
  */
 class Application {
-    /**
-     * @summary Instance.
-     * @private
-     * @type {Application}
-     */
     private static _instance: Application;
-
-    /**
-     * @summary Angular module.
-     * @private
-     * @type {IModule}
-     */
-    private _module: ng.IModule;
+    private _module: angular.IModule;
 
     /**
      * @summary Gets the angular module.
-     * @public
-     * @returns {IModule} Module.
+     * @returns {IModule} The module.
      */
-    public get module(): ng.IModule {
+    public get module() {
         return this._module;
-    }
-
-    /**
-     * @summary Gets the instance of class.
-     * @public
-     * @returns {Application} Instance of class.
-     */
-    public static get instance(): Application {
-        if (!Application._instance) {
-            Application._instance = new Application();
-        }
-
-        return Application._instance;
     }
 
     /**
@@ -75,55 +50,44 @@ class Application {
      * @private
      */
     constructor() {
-        // Initialize module.
-        this._initModule();
+        this._initializeModule();
     }
 
-    /**
-     * @summary Initialize class.
-     * @public
-     */
-    public initialize = (): void => {
-        // Initialize constants and configurations.
-        this._initConstants();
-        this._initConfigurations();
-    };
+    public setConfiguration = (configuration: {}) => {
+        const configurationModule = (appConfigProvider: ConfigurationProvider) => appConfigProvider.set(configuration);
+        this._module.config(['appConfigProvider', configurationModule]);
+    }
 
-    /**
-     * @summary Initialize configuration.
-     * @private
-     */
-    private _initConfigurations = (): void => {
-        this._module.config(RegisterConfiguration)
-                    .config(RouteConfiguration);
-    };
+    private _initializeConfigurations = () => {
+        this._module
+            .config(["$controllerProvider", "$compileProvider", "$filterProvider", "$provide", RegisterConfiguration.create])
+            .config(["$routeProvider", "appConfigRoute", RouteConfiguration.create]);
+    }
 
-    /**
-     * @summary Initialize constants.
-     * @private
-     */
-    private _initConstants = (): void => {
-        // Creates an application configuration.
-        var appConfig: Object = {
-            "appName": "app",
-            "appVersion": 1.0,
-            "route": {
-                "controllerPath": "javascript/controller/",
-                "cssPath": "css/",
-                "viewPath": "view/"
-            }
+    private _initializeProvider = () => {
+        this._module.provider("appConfig", ConfigurationProvider);
+    }
+
+    private _initializeConstants = () => {
+        const appConfigRoute = {
+            "controllerPath": "controller/",
+            "viewPath": "view/"
         };
 
-        this._module.constant("appConfig", appConfig);
-    };
+        this._module.constant("appConfigRoute", appConfigRoute);
+    }
 
-    /**
-     * @summary Initialize module.
-     * @private
-     */
-    private _initModule = (): void => {
-        this._module = angular.module("app", ["routeStyles"]);
-    };
+    private _initializeModule = () => {
+        const requires = ["ngRoute", "routeStyles"];
+        this._module = angular.module("app", requires);
+    }
+
+    public initialize = () => {
+        this._initializeProvider();
+        this._initializeConstants();
+        this._initializeConfigurations();
+    }
 }
 
-export = Application.instance;
+const instance = new Application();
+export = instance;

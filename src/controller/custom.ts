@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  *
- * Copyright (c) 2015 Cyril Schumacher.fr
+ * Copyright (c) 2017 Cyril Schumacher.fr
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,12 +21,13 @@
  * SOFTWARE.
  */
 
-/// <reference path="../typing/angularjs/angular.d.ts" />
-/// <amd-dependency path="directive/custom"/>
-/// <amd-dependency path="service/custom"/>
+import * as angular from "angular";
 
-import Application = require("app");
-import CustomService = require("service/custom");
+import Application = require("../app");
+import CustomService = require("../service/custom");
+
+import "../directive/custom";
+import "../service/custom";
 
 /**
  * @summary Custom controller.
@@ -38,7 +39,7 @@ class CustomController {
      * @summary Dependencies injection.
      * @type {Array<string>}
      */
-    public static $inject: Array<String> = ["$scope", "customService"];
+    public static $inject = ["$scope", "customService"];
 
     /**
      * @summary Constructor.
@@ -46,23 +47,17 @@ class CustomController {
      * @param $scope            {IScope}        Scope.
      * @param $customService    {CustomService} Custom service.
      */
-    public constructor(private $scope: ng.IScope, private customService: CustomService) {
-        /* Functions. */
-        this.$scope["double"] = this._double;
-
-        /* Variables. */
-        this.$scope["spices"] = [{ "name": "pasilla", "spiciness": "mild" },
+    public constructor($scope: angular.IScope, customService: CustomService) {
+        $scope["double"] = this._double;
+        $scope["spice"] = "habanero";
+        $scope["spices"] = [
+            { "name": "pasilla", "spiciness": "mild" },
             { "name": "jalapeno", "spiciness": "hot hot hot!" },
-            { "name": "habanero", "spiciness": "LAVA HOT!!" }];
-        this.$scope["spice"] = "habanero";
+            { "name": "habanero", "spiciness": "LAVA HOT!!" }
+        ];
     }
 
-    /**
-     * @summary Twice a number.
-     * @param {number} value The number.
-     * @return {number} The result.
-     */
-    private _double = (value: number): number => {
+    private _double = (value: number) => {
         return value * 2;
     };
 }

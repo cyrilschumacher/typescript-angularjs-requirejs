@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  *
- * Copyright (c) 2015 Cyril Schumacher.fr
+ * Copyright (c) 2017 Cyril Schumacher.fr
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,13 +21,17 @@
  * SOFTWARE.
  */
 
-/// <reference path="typing/angularjs/angular.d.ts" />
-/// <reference path="app.ts" />
+import * as angular from "angular";
 
-import Application = require("app");
+import Application = require("./app");
 
 // Initialize application.
 Application.initialize();
 
-// Start angular application.
-angular.bootstrap(document, ["app"]);
+// Obtains the application configuration.
+$.get("/javascript/configuration.json", configuration => {
+    Application.setConfiguration(configuration);
+
+    // Start angular application.
+    angular.bootstrap(document, ["app"]);
+});
